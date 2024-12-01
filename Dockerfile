@@ -1,5 +1,7 @@
 FROM osrf/ros:humble-desktop-full
 
+LABEL maintainer="Ryohei Kobayashi <kobayashi.ryohei621@mail.kyutech.jp>"
+
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
