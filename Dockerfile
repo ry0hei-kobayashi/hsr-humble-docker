@@ -1,15 +1,25 @@
-FROM osrf/ros:humble-desktop-full
+#FROM osrf/ros:humble-desktop-full
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 
 LABEL maintainer="Ryohei Kobayashi <kobayashi.ryohei621@mail.kyutech.jp>"
 
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN apt update -y 
+RUN apt install curl gnupg lsb-release git vim ssh -y
+
+#ROS Humble
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
 RUN apt update -y
-RUN apt install -y python3-colcon-common-extensions python3-rosdep
+RUN apt install ros-humble-desktop-full python3-colcon-common-extensions python3-rosdep -y
+
 RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list && rosdep init
 RUN rosdep update
 
+#clone hsr repos
 RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   git clone -b humble https://github.com/hsr-project/gazebo_ros2_control.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_controllers.git && \

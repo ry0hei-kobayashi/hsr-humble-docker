@@ -23,5 +23,13 @@ services:
     tty: true
     stdin_open: true
 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
     command: ros2 launch hsrb_gazebo_launch hsrb_apartment_world.launch.py
 
