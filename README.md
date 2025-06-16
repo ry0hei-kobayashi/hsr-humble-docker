@@ -20,4 +20,10 @@ Python Interface (ihsrb)を使用する
 ros2 run hsrb_interface_py ihsrb.py
 
 ```
+2025/06/17 次のURLに記載しているコマンドは一通り実行可能なことを確認(https://github.com/hsr-project/hsr_ros2_doc/blob/humble/docs/hsrb_interface_jp.md#bringup-python-interface)
+
+
+TODO
+・cyclone ddsを設定
+
 
