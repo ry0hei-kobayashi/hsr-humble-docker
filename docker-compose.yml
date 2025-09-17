@@ -23,5 +23,6 @@ services:
     tty: true
     stdin_open: true
 
-    command: ros2 launch hsrb_gazebo_launch hsrb_apartment_world.launch.py
+    #command: ros2 launch hsrb_gazebo_launch hsrb_apartment_world.launch.py
+    command: ros2 launch tmc_wrs_gazebo_launch wrs_practice0.launch.py
 
