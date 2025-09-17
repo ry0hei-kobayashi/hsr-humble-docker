@@ -34,16 +34,19 @@ RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   git clone -b humble https://github.com/hsr-project/tmc_teleop.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_teleop.git && \
   git clone -b humble https://github.com/hsr-project/tmc_database.git && \
-  git clone -b ignition/humble https://github.com/ry0hei-kobayashi/tmc_wrs_gazebo.git
-  #rm -rf hsrb_launch/hsrb_robot_launch && \
-  #rm -rf hsrb_gazebo_launch/tmc_grid_map_server && \
-  #rm -rf hsrb_simulator/hsrb_rviz_simulator && \
-  #rm -rf tmc_drivers/tmc_pgr_camera
+  git clone -b ignition/humble https://github.com/ry0hei-kobayashi/tmc_wrs_gazebo.git && \
+  rm -rf hsrb_launch/hsrb_robot_launch && \
+  rm -rf hsrb_gazebo_launch/tmc_grid_map_server && \
+  rm -rf hsrb_simulator/hsrb_rviz_simulator && \
+  rm -rf tmc_drivers/tmc_pgr_camera
 
-RUN cd /hsr_ros2_ws && . /opt/ros/humble/setup.bash && rosdep install --ignore-src -r -y -i --from-paths src \
+RUN cd /hsr_ros2_ws && . /opt/ros/humble/setup.bash && rosdep install --ignore-src -r -y -i --from-paths src && \
     #--skip-keys="tmc_grid_map_server tmc_odometry_switcher" && \
-    --skip-keys="tmc_odometry_switcher" && \
+    #--skip-keys="tmc_odometry_switcher" && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers $(nproc)
+
+RUN apt update -y
+RUN apt install -y vim ros-humble-rmw-cyclonedds-cpp
 
 RUN . /opt/ros/humble/setup.bash && . /hsr_ros2_ws/install/setup.bash
 COPY ./entrypoint.sh /hsr_ros2_ws/entrypoint.sh
