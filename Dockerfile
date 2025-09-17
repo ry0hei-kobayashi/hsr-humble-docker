@@ -41,14 +41,21 @@ RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   rm -rf tmc_drivers/tmc_pgr_camera
 
 RUN cd /hsr_ros2_ws && . /opt/ros/humble/setup.bash && rosdep install --ignore-src -r -y -i --from-paths src && \
-    #--skip-keys="tmc_grid_map_server tmc_odometry_switcher" && \
     #--skip-keys="tmc_odometry_switcher" && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers $(nproc)
 
 RUN apt update -y
-RUN apt install -y vim ros-humble-rmw-cyclonedds-cpp
+RUN apt install -y vim \
+    ros-humble-rmw-cyclonedds-cpp
+
+# additional packages
+COPY additional_packages  /hsr_ros2_ws/src/additional_packages/
+RUN cd /hsr_ros2_ws && . /opt/ros/humble/setup.bash && . /hsr_ros2_ws/install/setup.bash && \
+    rosdep install --ignore-src -r -y -i --from-paths src && \
+    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers $(nproc)
 
 RUN . /opt/ros/humble/setup.bash && . /hsr_ros2_ws/install/setup.bash
+COPY ./cyclonedds_profile.xml /hsr_ros2_ws/cyclonedds_profile.xml
 COPY ./entrypoint.sh /hsr_ros2_ws/entrypoint.sh
 RUN chmod +x /hsr_ros2_ws/entrypoint.sh
 ENTRYPOINT ["/hsr_ros2_ws/entrypoint.sh"]

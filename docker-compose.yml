@@ -1,10 +1,7 @@
 version: '3.2'
 services:
   hsrb_humble:
-    #network_mode: host
-    #ipc: host
-    #pid: host
-    network_mode: bridge #important for network setting
+    network_mode: host
     build:
       context: .
       network: host
@@ -12,10 +9,16 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
-      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
-      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+      #- ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      #- ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+      - ROS_DOMAIN_ID=20
+      - ROS_LOCALHOST_ONLY=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=file:///hsr_ros2_ws/cyclonedds_profile.xml
+
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix 
+      - ./additional_packages:/hsr_ros2_ws/src/additional_packages
     security_opt:
       - seccomp:unconfined
 
