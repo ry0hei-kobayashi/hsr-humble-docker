@@ -1,12 +1,25 @@
-FROM osrf/ros:humble-desktop-full
+#FROM osrf/ros:humble-desktop-full
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+
 
 LABEL maintainer="Ryohei Kobayashi <kobayashi.ryohei621@mail.kyutech.jp>"
 
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
+
 RUN apt update -y
-RUN apt install -y python3-colcon-common-extensions python3-rosdep
+RUN apt install -y vim git curl lsb-release gnupg2 build-essential cmake
+
+#ROS Humble
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+RUN apt update -y
+RUN apt install -y ros-humble-desktop-full \
+    python3-colcon-common-extensions \ 
+    python3-rosdep \
+    ros-humble-rmw-cyclonedds-cpp
 RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list && rosdep init
 RUN rosdep update
 
@@ -44,9 +57,6 @@ RUN cd /hsr_ros2_ws && . /opt/ros/humble/setup.bash && rosdep install --ignore-s
     #--skip-keys="tmc_odometry_switcher" && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --parallel-workers $(nproc)
 
-RUN apt update -y
-RUN apt install -y vim \
-    ros-humble-rmw-cyclonedds-cpp
 
 # additional packages
 COPY additional_packages  /hsr_ros2_ws/src/additional_packages/
