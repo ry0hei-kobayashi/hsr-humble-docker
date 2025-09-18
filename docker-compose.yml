@@ -15,6 +15,9 @@ services:
       - ROS_LOCALHOST_ONLY=0
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=file:///hsr_ros2_ws/cyclonedds_profile.xml
+      - __NV_PRIME_RENDER_OFFLOAD=1
+      - __GLX_VENDOR_LIBRARY_NAME=nvidia
+      - NVIDIA_DRIVER_CAPABILITIES=graphics,display,compute,utility
 
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix 
@@ -35,5 +38,5 @@ services:
               capabilities: [gpu]
 
     #command: ros2 launch hsrb_gazebo_launch hsrb_apartment_world.launch.py
-    command: ros2 launch tmc_wrs_gazebo_launch wrs_practice0.launch.py
+    command: ros2 launch tmc_wrs_gazebo_launch wrs_no_objects_world.launch.py
 

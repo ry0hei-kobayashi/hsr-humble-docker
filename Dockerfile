@@ -6,7 +6,10 @@ LABEL maintainer="Ryohei Kobayashi <kobayashi.ryohei621@mail.kyutech.jp>"
 
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
-
+            
+ARG __NV_PRIME_RENDER_OFFLOAD=1
+ARG __GLX_VENDOR_LIBRARY_NAME=nvidia
+ARG NVIDIA_DRIVER_CAPABILITIES=graphics,display,compute,utility
 
 RUN apt update -y
 RUN apt install -y vim git curl lsb-release gnupg2 build-essential cmake
