@@ -32,6 +32,7 @@ RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   git clone -b humble https://github.com/hsr-project/tmc_gazebo.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_simulator.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_controllers.git && \
+  git clone -b humble https://github.com/hsr-project/hsrb_control.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_moveit.git && \
   git clone -b humble https://github.com/hsr-project/hsr_common.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_launch.git && \
@@ -42,6 +43,7 @@ RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   git clone -b humble https://github.com/hsr-project/tmc_realtime_control.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_manipulation.git && \
   git clone -b humble https://github.com/hsr-project/tmc_manipulation.git && \
+  git clone -b humble https://github.com/hsr-project/tmc_manipulation_local_planner.git && \
   git clone -b humble https://github.com/hsr-project/tmc_manipulation_base.git && \
   git clone -b humble https://github.com/hsr-project/tmc_manipulation_planner.git && \
   git clone -b humble https://github.com/hsr-project/tmc_voice.git && \
@@ -50,6 +52,16 @@ RUN mkdir -p /hsr_ros2_ws/src && cd /hsr_ros2_ws/src && \
   git clone -b humble https://github.com/hsr-project/tmc_teleop.git && \
   git clone -b humble https://github.com/hsr-project/hsrb_teleop.git && \
   git clone -b humble https://github.com/hsr-project/tmc_database.git && \
+  git clone -b humble https://github.com/hsr-project/hsrb_robot_local_planner.git && \
+  git clone -b humble https://github.com/hsr-project/hsrb_robot.git && \
+  git clone -b main https://github.com/hsr-project/pick_and_place_example.git && \
+  git clone -b humble https://github.com/hsr-project/instance_segmentation_msgs.git && \
+  git clone -b humble https://github.com/hsr-project/cv_bridge_util.git && \
+  git clone -b main https://github.com/hsr-project/coordinate_transform_util_ros.git && \
+  git clone -b humble https://github.com/hsr-project/compressed_rgbd_msgs.git && \
+  git clone -b humble https://github.com/hsr-project/tmc_point_cloud.git && \
+  git clone -b humble https://github.com/hsr-project/graspnet_ros.git && \
+  git clone -b humble https://github.com/hsr-project/hsrb_system_inspection.git && \
   git clone -b ignition/humble https://github.com/ry0hei-kobayashi/tmc_wrs_gazebo.git && \
   rm -rf hsrb_launch/hsrb_robot_launch && \
   rm -rf hsrb_gazebo_launch/tmc_grid_map_server && \
